@@ -1,0 +1,11 @@
+# Основные зависимости
+customtkinter==5.2.2
+Pillow==10.1.0
+python-dateutil==2.8.2
+openpyxl==3.1.2
+
+# Для работы с датами
+python-dateutil==2.8.2
+
+# Для экспорта (опционально)
+pandas==2.1.4
