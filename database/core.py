@@ -7,6 +7,7 @@
 
 import sqlite3
 import logging
+import threading
 from typing import Optional
 
 from config.settings import Settings
@@ -22,45 +23,51 @@ logger = logging.getLogger(__name__)
 class Database:
     """Основной класс для работы с базой данных"""
     
-    def __init__(self):
+        def __init__(self):
         self.db_path = Settings.DB_PATH
-        self.conn = None
-        self.cursor = None
-        
+        self.conn: Optional[sqlite3.Connection] = None
+        self.cursor: Optional[sqlite3.Cursor] = None
+        self._lock = threading.Lock()
+
         # Инициализация
         self.connect()
         self.create_tables()
         self.update_table_structure()
-        
+
         # Инициализация подмодулей
         self.clients = ClientsDB(self)
         self.matrices = MatricesDB(self)
         self.search = SearchDB(self)
         self.statistics = StatisticsDB(self)
-        
-        print(f"✅ База данных инициализирована: {self.db_path}")
+
+        logger.info("База данных инициализирована: %s", self.db_path)
     
-    def connect(self):
-        """Установка соединения с базой данных"""
-        self.conn = sqlite3.connect(str(self.db_path))
+        def connect(self) -> None:
+        """Установка соединения с базой данных."""
+        self.conn = sqlite3.connect(str(self.db_path), check_same_thread=False)
         self.conn.row_factory = sqlite3.Row
         self.cursor = self.conn.cursor()
+        logger.debug("Соединение с БД установлено: %s", self.db_path)
     
-    def reconnect(self):
-        """Переподключение к базе данных (для работы с потоками)"""
-        try:
-            if self.conn:
-                self.conn.close()
-        except:
-            pass
-        self.connect()
-        print("🔄 Переподключение к БД")
+        def reconnect(self) -> None:
+        """Переподключение к базе данных (для работы с потоками)."""
+        with self._lock:
+            try:
+                if self.conn:
+                    self.conn.close()
+            except sqlite3.Error as e:
+                logger.warning("Ошибка закрытия соединения при переподключении: %s", e)
+            self.connect()
+        logger.info("Переподключение к БД выполнено")
     
-    def close(self):
-        """Закрытие соединения"""
+        def close(self) -> None:
+        """Закрытие соединения с базой данных."""
         if self.conn:
-            self.conn.close()
-            print("🔒 Соединение с БД закрыто")
+            try:
+                self.conn.close()
+                logger.info("Соединение с БД закрыто")
+            except sqlite3.Error as e:
+                logger.error("Ошибка при закрытии соединения с БД: %s", e)
     
     def create_tables(self):
         """Создание таблиц клиентов и матриц"""
@@ -95,8 +102,9 @@ class Database:
             )
         ''')
         
-        self.conn.commit()
+                self.conn.commit()
         logger.debug("Таблицы созданы или уже существуют")
+
     
     def update_table_structure(self):
         """Обновление структуры таблицы"""
@@ -114,14 +122,17 @@ class Database:
             ('service_name', 'TEXT')
         ]
         
-        for column_name, column_type in new_columns:
+                for column_name, column_type in new_columns:
             if column_name not in existing_columns:
                 try:
-                    self.cursor.execute(f'ALTER TABLE clients ADD COLUMN {column_name} {column_type}')
+                    # column_name и column_type — внутренние константы, не пользовательский ввод
+                    self.cursor.execute(
+                        f'ALTER TABLE clients ADD COLUMN {column_name} {column_type}'
+                    )
                     self.conn.commit()
-                    print(f"✅ Добавлена колонка: {column_name}")
-                except Exception as e:
-                    print(f"❌ Ошибка добавления колонки {column_name}: {e}")
+                    logger.info("Добавлена колонка: %s", column_name)
+                except sqlite3.Error as e:
+                    logger.error("Ошибка добавления колонки %s: %s", column_name, e)
     
     # Делегирование методов для обратной совместимости
     def calculate_destiny_number(self, birth_date: str) -> int:

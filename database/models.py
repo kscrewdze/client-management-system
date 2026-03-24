@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
 """Модели данных"""
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Optional, Any, Dict
+import sqlite3
 
 
 @dataclass
@@ -13,15 +14,27 @@ class Matrix:
     name: str
     price: float
     created_date: str
-    
+
     @classmethod
     def from_db_row(cls, row: Any) -> 'Matrix':
-        """Создание из строки БД"""
+        """Создание из строки БД.
+
+        Поддерживает как sqlite3.Row (доступ по имени),
+        так и tuple/list (доступ по индексу) для обратной совместимости.
+        """
+        if isinstance(row, sqlite3.Row):
+            return cls(
+                id=row['id'],
+                name=row['name'],
+                price=row['price'],
+                created_date=row['created_date'],
+            )
+        # fallback: tuple / list
         return cls(
             id=row[0],
             name=row[1],
             price=row[2],
-            created_date=row[3]
+            created_date=row[3],
         )
     
     def to_dict(self) -> Dict[str, Any]:
@@ -53,46 +66,51 @@ class Client:
     completed_date: Optional[str]
     matrix_name: Optional[str] = None
     
-    @classmethod
+        @classmethod
     def from_db_row(cls, row: Any) -> 'Client':
-        """Создание из строки БД"""
-        # Определяем длину кортежа для обратной совместимости
-        if len(row) >= 15:
+        """Создание из строки БД.
+
+        Поддерживает sqlite3.Row (доступ по имени колонки) и tuple/list.
+        sqlite3.Row — предпочтительный вариант: безопасен при изменении схемы.
+        """
+        if isinstance(row, sqlite3.Row):
+            keys = row.keys()
             return cls(
-                id=row[0],
-                name=row[1],
-                telegram=row[2],
-                birth_date=row[3],
-                destiny_number=row[4],
-                matrix_id=row[5],
-                service_name=row[6],
-                service_price=row[7],
-                comment=row[8],
-                phone=row[9],
-                order_date=row[10],
-                created_date=row[11],
-                is_completed=bool(row[12]),
-                completed_date=row[13],
-                matrix_name=row[14]
+                id=row['id'],
+                name=row['name'],
+                telegram=row['telegram'],
+                birth_date=row['birth_date'],
+                destiny_number=row['destiny_number'],
+                matrix_id=row['matrix_id'],
+                service_name=row['service_name'],
+                service_price=row['service_price'],
+                comment=row['comment'],
+                phone=row['phone'],
+                order_date=row['order_date'],
+                created_date=row['created_date'],
+                is_completed=bool(row['is_completed']),
+                completed_date=row['completed_date'],
+                matrix_name=row['matrix_name'] if 'matrix_name' in keys else None,
             )
-        else:
-            return cls(
-                id=row[0],
-                name=row[1],
-                telegram=row[2],
-                birth_date=row[3],
-                destiny_number=row[4],
-                matrix_id=row[5],
-                service_name=row[6],
-                service_price=row[7],
-                comment=row[8] if len(row) > 8 else None,
-                phone=row[9] if len(row) > 9 else None,
-                order_date=row[10] if len(row) > 10 else row[3],
-                created_date=row[11] if len(row) > 11 else datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                is_completed=bool(row[12]) if len(row) > 12 else False,
-                completed_date=row[13] if len(row) > 13 else None,
-                matrix_name=row[14] if len(row) > 14 else None
-            )
+        # fallback: tuple / list (обратная совместимость)
+        row_len = len(row)
+        return cls(
+            id=row[0],
+            name=row[1],
+            telegram=row[2],
+            birth_date=row[3],
+            destiny_number=row[4],
+            matrix_id=row[5],
+            service_name=row[6],
+            service_price=row[7],
+            comment=row[8] if row_len > 8 else None,
+            phone=row[9] if row_len > 9 else None,
+            order_date=row[10] if row_len > 10 else row[3],
+            created_date=row[11] if row_len > 11 else datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            is_completed=bool(row[12]) if row_len > 12 else False,
+            completed_date=row[13] if row_len > 13 else None,
+            matrix_name=row[14] if row_len > 14 else None,
+        )
     
     @property
     def formatted_price(self) -> str:
