@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """Модели данных"""
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import datetime
 from typing import Optional, Any, Dict
 import sqlite3
@@ -66,7 +66,7 @@ class Client:
     completed_date: Optional[str]
     matrix_name: Optional[str] = None
     
-        @classmethod
+    @classmethod
     def from_db_row(cls, row: Any) -> 'Client':
         """Создание из строки БД.
 

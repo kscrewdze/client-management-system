@@ -6,11 +6,16 @@ __pycache__/
 .Python
 env/
 venv/
+.venv/
 ENV/
 env.bak/
 venv.bak/
+*.egg-info/
+*.egg
+dist/
+build/
 
-# База данных
+# База данных (пользовательские данные)
 *.db
 *.sqlite3
 
@@ -18,14 +23,33 @@ venv.bak/
 exports/
 *.xlsx
 *.csv
-*.json
+
+# PyInstaller
+*.spec
+*.manifest
 
 # IDE
 .vscode/
 .idea/
 *.swp
 *.swo
+*.sublime-project
+*.sublime-workspace
 
 # Системные файлы
 .DS_Store
 Thumbs.db
+Desktop.ini
+ehthumbs.db
+
+# Логи
+logs/
+*.log
+
+# Тесты
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Mypy
+.mypy_cache/

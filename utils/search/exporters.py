@@ -154,15 +154,16 @@ class SearchExporter:
         for client in clients:
             row_class = 'completed' if client.is_completed else ''
             html.append(f'<tr class="{row_class}">')
-            html.append(f'<td>{client.id}</td>')
-            html.append(f'<td>{client.name}</td>')
-            html.append(f'<td>@{client.telegram or ""}</td>')
-            html.append(f'<td>{client.phone or ""}</td>')
-            html.append(f'<td>{client.birth_date}</td>')
-            html.append(f'<td>{client.destiny_number}</td>')
-            html.append(f'<td>{client.matrix_name or ""}</td>')
+            from html import escape as _esc
+            html.append(f'<td>{_esc(str(client.id))}</td>')
+            html.append(f'<td>{_esc(client.name)}</td>')
+            html.append(f'<td>@{_esc(client.telegram or "")}</td>')
+            html.append(f'<td>{_esc(client.phone or "")}</td>')
+            html.append(f'<td>{_esc(client.birth_date)}</td>')
+            html.append(f'<td>{_esc(str(client.destiny_number))}</td>')
+            html.append(f'<td>{_esc(client.matrix_name or "")}</td>')
             html.append(f'<td>{client.service_price:,.0f} ₽</td>'.replace(",", " "))
-            html.append(f'<td>{client.order_date}</td>')
+            html.append(f'<td>{_esc(client.order_date)}</td>')
             html.append(f'<td>{"✅" if client.is_completed else "⬜"}</td>')
             html.append('</tr>')
         

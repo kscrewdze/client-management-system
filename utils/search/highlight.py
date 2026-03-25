@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """Подсветка текста в результатах поиска"""
+import logging
 import re
 from typing import List
 from database.models import Client
@@ -32,7 +33,8 @@ class TextHighlighter:
             # Заменяем на подсвеченный вариант
             highlighted = pattern.sub(r'[\1]', text)
             return highlighted
-        except:
+        except (re.error, TypeError) as e:
+            logging.getLogger(__name__).debug("Ошибка подсветки: %s", e)
             return text
     
     @staticmethod

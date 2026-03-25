@@ -1,39 +1,39 @@
 # -*- coding: utf-8 -*-
 
-"""Полуночная тема - темная с контрастными акцентами"""
+"""Полуночная тема — тёмная с мягкими голубыми акцентами"""
 from themes.themes.base_theme import BaseTheme, ThemeColors
 
 
 class MidnightTheme(BaseTheme):
     """Полуночная тема"""
-    
+
     def __init__(self):
         self.name = "Полуночная"
-        self.description = "Темная тема с контрастными акцентами"
+        self.description = "Тёмная с голубыми акцентами"
         super().__init__()
-    
+
     def get_colors(self) -> ThemeColors:
         return ThemeColors(
-            primary="#90caf9",
-            secondary="#64b5f6",
-            accent="#ffb74d",
-            success="#81c784",
-            warning="#ffb74d",
-            error="#e57373",
-            info="#4fc3f7",
-            background="#121212",
-            background_secondary="#1e1e1e",
-            background_widget="#2d2d2d",
-            background_hover="#3d3d3d",
-            text_primary="#ffffff",
-            text_secondary="#b0b0b0",
-            text_accent="#ffb74d",
-            text_disabled="#666666",
-            text_inverse="#000000",
-            border="#3d3d3d",
-            border_focus="#90caf9",
-            highlight="#64b5f6",
-            shadow="#000000"
+            primary="#82b1ff",
+            secondary="#448aff",
+            accent="#ffd740",
+            success="#69f0ae",
+            warning="#ffab40",
+            error="#ff5252",
+            info="#40c4ff",
+            background="#181c24",
+            background_secondary="#1e2530",
+            background_widget="#252d3a",
+            background_hover="#2f3a4a",
+            text_primary="#e0e6ef",
+            text_secondary="#8899aa",
+            text_accent="#ffd740",
+            text_disabled="#4a5568",
+            text_inverse="#181c24",
+            border="#2f3a4a",
+            border_focus="#82b1ff",
+            highlight="#448aff",
+            shadow="#0d1017",
         )
 
 

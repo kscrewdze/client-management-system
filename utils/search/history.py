@@ -19,7 +19,7 @@ class SearchHistory:
         """
         self.history: List[str] = []
         self.max_history = max_history
-        print("✅ SearchHistory инициализирован")
+        logger.debug("SearchHistory инициализирован")
     
     def add(self, query: str) -> bool:
         """
@@ -40,7 +40,7 @@ class SearchHistory:
         if self.history:
             last = self.history[-1]
             if clean_query.startswith(last) and len(clean_query) == len(last) + 1:
-                print(f"   ↪ Это расширение '{last}', не добавляем в историю")
+                logger.debug("Расширение '%s', не добавляем в историю", last)
                 return False
         
         # Добавляем только новый запрос
@@ -49,7 +49,7 @@ class SearchHistory:
             # Ограничиваем историю
             if len(self.history) > self.max_history:
                 self.history = self.history[-self.max_history:]
-            print(f"   📝 Добавлено в историю: {clean_query}")
+            logger.debug("Добавлено в историю: %s", clean_query)
             return True
         
         return False
@@ -65,7 +65,7 @@ class SearchHistory:
     def clear(self):
         """Очистить историю"""
         self.history.clear()
-        print("🗑 История поиска очищена")
+        logger.debug("История поиска очищена")
     
     def remove(self, query: str) -> bool:
         """Удалить конкретный запрос из истории"""

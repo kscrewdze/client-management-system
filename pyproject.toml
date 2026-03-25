@@ -1,0 +1,41 @@
+[project]
+name = "client-manager"
+version = "9.0.0"
+description = "Современное CRM-приложение для управления клиентами и матрицами"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+authors = [
+    {name = "kScrewdze"}
+]
+keywords = ["crm", "client-management", "pyside6", "desktop-app", "sqlite"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: X11 Applications :: Qt",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Office/Business",
+]
+
+dependencies = [
+    "PySide6>=6.6.0",
+    "Pillow>=10.1.0",
+    "python-dateutil>=2.8.2",
+    "openpyxl>=3.1.2",
+]
+
+[project.urls]
+Homepage = "https://github.com/kscrewdze/client-management-system"
+Repository = "https://github.com/kscrewdze/client-management-system"
+Issues = "https://github.com/kscrewdze/client-management-system/issues"
+Changelog = "https://github.com/kscrewdze/client-management-system/blob/master/CHANGELOG.md"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

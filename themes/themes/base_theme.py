@@ -44,8 +44,11 @@ class BaseTheme:
     """Базовый класс темы"""
     
     def __init__(self):
-        self.name = "Base Theme"
-        self.description = "Базовая тема"
+        # Не перезатираем name/description если потомок уже задал их
+        if not hasattr(self, 'name'):
+            self.name = "Base Theme"
+        if not hasattr(self, 'description'):
+            self.description = "Базовая тема"
         self.colors = self.get_colors()
         self.fonts = self.get_fonts()
         self.sizes = self.get_sizes()

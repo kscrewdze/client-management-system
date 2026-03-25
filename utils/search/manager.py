@@ -32,7 +32,7 @@ class ClientSearch:
         self.after_id = None       # ID для after()
         self.last_master = None    # Последний master для after
         
-        print("✅ ClientSearch инициализирован")
+        logger.debug("ClientSearch инициализирован")
     
     def search(self, query: str, callback: Optional[Callable] = None) -> List:
         """
@@ -47,7 +47,7 @@ class ClientSearch:
         """
         # Если запрос пустой или меньше 4 символов - возвращаем всех
         if not query or len(query.strip()) < 4:
-            print(f"📋 Запрос '{query}' слишком короткий (мин. 4 символа), показываем всех клиентов")
+            logger.debug("Запрос '%s' слишком короткий, показываем всех клиентов", query)
             results = self.db.get_all_clients()
             self.last_query = ""
             self.last_results = results
@@ -60,7 +60,7 @@ class ClientSearch:
         # Очищаем запрос
         clean_query = query.strip().lower()
         
-        print(f"🔍 Поиск: '{clean_query}'")
+        logger.debug("Поиск: '%s'", clean_query)
         
         # Добавляем в историю
         history_manager.add(clean_query)
@@ -70,12 +70,11 @@ class ClientSearch:
             # Используем метод search_clients из базы данных
             results = self.db.search_clients(clean_query)
             
-            # Дополнительная отладка
-            print(f"📊 Получено результатов: {len(results)}")
+            logger.debug("Получено результатов: %d", len(results))
             if len(results) > 0:
-                print(f"   Первый клиент: {results[0].name}")
+                logger.debug("Первый клиент: %s", results[0].name)
             else:
-                print("   Нет результатов")
+                logger.debug("Нет результатов")
             
             self.last_query = clean_query
             self.last_results = results
@@ -94,9 +93,7 @@ class ClientSearch:
             return results
             
         except Exception as e:
-            error_msg = f"❌ Ошибка поиска: {e}"
-            print(error_msg)
-            logger.error(error_msg, exc_info=True)
+            logger.error("Ошибка поиска: %s", e, exc_info=True)
             
             if self.notifier:
                 self.notifier.show_error("❌ Ошибка при поиске")
@@ -119,7 +116,7 @@ class ClientSearch:
         
         if master is None:
             # Если нет master, выполняем сразу
-            print("⚠️ Нет master для after, выполняем сразу")
+            logger.debug("Нет master для after, выполняем сразу")
             results = self.search(query)
             if callback:
                 callback(results)
@@ -132,8 +129,8 @@ class ClientSearch:
         if self.after_id:
             try:
                 master.after_cancel(self.after_id)
-            except:
-                pass
+            except Exception as e:
+                logger.debug("Не удалось отменить after: %s", e)
             self.after_id = None
         
         # Если запрос слишком короткий, сразу показываем всех
@@ -147,7 +144,7 @@ class ClientSearch:
         # Используем after вместо threading
         self.after_id = master.after(delay, lambda: self._execute_search(query, callback, master))
         
-        print(f"⏱ Поиск через {delay}мс: '{query}'")
+        logger.debug("Поиск через %dмс: '%s'", delay, query)
     
     def _execute_search(self, query: str, callback: Callable, master):
         """Выполнение отложенного поиска"""
@@ -158,7 +155,7 @@ class ClientSearch:
                 # Используем after для callback
                 master.after(0, lambda: callback(results))
         except Exception as e:
-            print(f"❌ Ошибка отложенного поиска: {e}")
+            logger.error("Ошибка отложенного поиска: %s", e)
         finally:
             self.after_id = None
     

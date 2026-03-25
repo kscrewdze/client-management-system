@@ -1,39 +1,39 @@
 # -*- coding: utf-8 -*-
 
-"""Изумрудная тема - свежие зеленые оттенки"""
+"""Изумрудная тема — элегантные зеленые тона с мягким контрастом"""
 from themes.themes.base_theme import BaseTheme, ThemeColors
 
 
 class EmeraldTheme(BaseTheme):
     """Изумрудная тема"""
-    
+
     def __init__(self):
         self.name = "Изумрудная"
-        self.description = "Свежие зеленые оттенки"
+        self.description = "Элегантные изумрудные тона"
         super().__init__()
-    
+
     def get_colors(self) -> ThemeColors:
         return ThemeColors(
             primary="#2e7d32",
-            secondary="#1b5e20",
-            accent="#ffb74d",
-            success="#4caf50",
-            warning="#ff9800",
-            error="#f44336",
-            info="#00bcd4",
-            background="#f1f8e9",
-            background_secondary="#e8f5e9",
+            secondary="#388e3c",
+            accent="#ffa726",
+            success="#43a047",
+            warning="#fb8c00",
+            error="#e53935",
+            info="#039be5",
+            background="#f5f9f5",
+            background_secondary="#eef5ee",
             background_widget="#ffffff",
-            background_hover="#c8e6c9",
-            text_primary="#1b5e20",
-            text_secondary="#2e7d32",
-            text_accent="#ff6d00",
-            text_disabled="#9e9e9e",
+            background_hover="#dcedc8",
+            text_primary="#1b3a1b",
+            text_secondary="#557a55",
+            text_accent="#e65100",
+            text_disabled="#a0a0a0",
             text_inverse="#ffffff",
-            border="#a5d6a7",
+            border="#c8e6c9",
             border_focus="#2e7d32",
             highlight="#66bb6a",
-            shadow="#81c784"
+            shadow="#a5d6a7",
         )
 
 

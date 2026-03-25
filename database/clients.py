@@ -56,7 +56,7 @@ class ClientsDB:
             logger.info("Добавлен клиент: %s (ID: %d)", client_data['name'], client_id)
             return client_id
         except Exception as e:
-                        logger.error("Ошибка добавления клиента '%s': %s", client_data.get('name'), e, exc_info=True)
+            logger.error("Ошибка добавления клиента '%s': %s", client_data.get('name'), e, exc_info=True)
             raise
 
     def update_client(self, client_id: int, client_data: Dict[str, Any]) -> None:
@@ -92,7 +92,7 @@ class ClientsDB:
                 self.db.conn.commit()
             logger.info("Обновлён клиент ID %d", client_id)
         except Exception as e:
-                        logger.error("Ошибка обновления клиента ID %d: %s", client_id, e, exc_info=True)
+            logger.error("Ошибка обновления клиента ID %d: %s", client_id, e, exc_info=True)
             raise
 
     def delete_client(self, client_id: int) -> None:
@@ -106,7 +106,7 @@ class ClientsDB:
         """
         with self.db._lock:
             self.db.cursor.execute('DELETE FROM clients WHERE id = ?', (client_id,))
-                        self.db.conn.commit()
+            self.db.conn.commit()
         logger.info("Удалён клиент ID %d", client_id)
 
     def get_all_clients(self) -> List[Client]:
@@ -115,14 +115,15 @@ class ClientsDB:
         Returns:
             Список клиентов, отсортированных по дате создания (новые первыми).
         """
-        self.db.cursor.execute('''
-            SELECT clients.*, matrices.name as matrix_name
-            FROM clients
-            LEFT JOIN matrices ON clients.matrix_id = matrices.id
-            ORDER BY clients.created_date DESC
-        ''')
-        rows = self.db.cursor.fetchall()
-                clients = [Client.from_db_row(row) for row in rows]
+        with self.db._lock:
+            self.db.cursor.execute('''
+                SELECT clients.*, matrices.name as matrix_name
+                FROM clients
+                LEFT JOIN matrices ON clients.matrix_id = matrices.id
+                ORDER BY clients.created_date DESC
+            ''')
+            rows = self.db.cursor.fetchall()
+        clients = [Client.from_db_row(row) for row in rows]
         logger.debug("Загружено клиентов: %d", len(clients))
         return clients
 
@@ -135,17 +136,18 @@ class ClientsDB:
         Returns:
             Объект Client или None, если клиент не найден.
         """
-        self.db.cursor.execute('''
-            SELECT clients.*, matrices.name as matrix_name
-            FROM clients
-            LEFT JOIN matrices ON clients.matrix_id = matrices.id
-            WHERE clients.id = ?
-        ''', (client_id,))
-        row = self.db.cursor.fetchone()
+        with self.db._lock:
+            self.db.cursor.execute('''
+                SELECT clients.*, matrices.name as matrix_name
+                FROM clients
+                LEFT JOIN matrices ON clients.matrix_id = matrices.id
+                WHERE clients.id = ?
+            ''', (client_id,))
+            row = self.db.cursor.fetchone()
         if not row:
             logger.warning("Клиент ID %d не найден", client_id)
             return None
-                client = Client.from_db_row(row)
+        client = Client.from_db_row(row)
         logger.debug("Получен клиент ID %d: %s", client_id, client.name)
         return client
 
@@ -158,18 +160,18 @@ class ClientsDB:
         Returns:
             Новый статус выполнения (True — выполнен).
         """
-        self.db.cursor.execute(
-            'SELECT is_completed FROM clients WHERE id = ?', (client_id,)
-        )
-        result = self.db.cursor.fetchone()
-        if not result:
-            logger.warning("toggle_completed: клиент ID %d не найден", client_id)
-            return False
-
-        new_status = 0 if result['is_completed'] else 1
-        completed_date = datetime.now().strftime("%d.%m.%Y") if new_status == 1 else None
-
         with self.db._lock:
+            self.db.cursor.execute(
+                'SELECT is_completed FROM clients WHERE id = ?', (client_id,)
+            )
+            result = self.db.cursor.fetchone()
+            if not result:
+                logger.warning("toggle_completed: клиент ID %d не найден", client_id)
+                return False
+
+            new_status = 0 if result['is_completed'] else 1
+            completed_date = datetime.now().strftime("%d.%m.%Y") if new_status == 1 else None
+
             self.db.cursor.execute(
                 'UPDATE clients SET is_completed=?, completed_date=? WHERE id=?',
                 (new_status, completed_date, client_id),

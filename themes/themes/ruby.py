@@ -1,39 +1,39 @@
 # -*- coding: utf-8 -*-
 
-"""Рубиновая тема - красные оттенки"""
+"""Рубиновая тема — тёплые бордовые акценты"""
 from themes.themes.base_theme import BaseTheme, ThemeColors
 
 
 class RubyTheme(BaseTheme):
     """Рубиновая тема"""
-    
+
     def __init__(self):
         self.name = "Рубиновая"
-        self.description = "Красные оттенки"
+        self.description = "Тёплые бордовые акценты"
         super().__init__()
-    
+
     def get_colors(self) -> ThemeColors:
         return ThemeColors(
-            primary="#b71c1c",
+            primary="#c62828",
             secondary="#d32f2f",
             accent="#ffd54f",
             success="#2e7d32",
-            warning="#ff9800",
-            error="#f44336",
+            warning="#fb8c00",
+            error="#b71c1c",
             info="#0288d1",
-            background="#ffebee",
-            background_secondary="#ffcdd2",
+            background="#fdf5f5",
+            background_secondary="#fce8e8",
             background_widget="#ffffff",
-            background_hover="#ef9a9a",
-            text_primary="#b71c1c",
-            text_secondary="#c62828",
-            text_accent="#ffd54f",
-            text_disabled="#9e9e9e",
+            background_hover="#f5cece",
+            text_primary="#3e1010",
+            text_secondary="#7b3535",
+            text_accent="#bf360c",
+            text_disabled="#a0a0a0",
             text_inverse="#ffffff",
-            border="#ef5350",
-            border_focus="#d32f2f",
-            highlight="#e57373",
-            shadow="#ffcdd2"
+            border="#e8b4b4",
+            border_focus="#c62828",
+            highlight="#ef5350",
+            shadow="#ffcdd2",
         )
 
 

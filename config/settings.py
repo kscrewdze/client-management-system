@@ -4,8 +4,6 @@
 Автор: kScrewdze
 Версия: 9.0
 """
-
-"""Настройки приложения"""
 import os
 import sys
 from pathlib import Path

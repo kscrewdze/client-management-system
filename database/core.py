@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 class Database:
     """Основной класс для работы с базой данных"""
     
-        def __init__(self):
+    def __init__(self):
         self.db_path = Settings.DB_PATH
         self.conn: Optional[sqlite3.Connection] = None
         self.cursor: Optional[sqlite3.Cursor] = None
@@ -42,14 +42,21 @@ class Database:
 
         logger.info("База данных инициализирована: %s", self.db_path)
     
-        def connect(self) -> None:
+    @staticmethod
+    def _unicode_lower(value: str | None) -> str | None:
+        """Unicode-совместимый LOWER для SQLite (кириллица и др.)."""
+        return value.lower() if value else value
+
+    def connect(self) -> None:
         """Установка соединения с базой данных."""
         self.conn = sqlite3.connect(str(self.db_path), check_same_thread=False)
         self.conn.row_factory = sqlite3.Row
+        # Регистрируем Unicode-совместимый LOWER для кириллицы
+        self.conn.create_function("UNICODE_LOWER", 1, self._unicode_lower, deterministic=True)
         self.cursor = self.conn.cursor()
         logger.debug("Соединение с БД установлено: %s", self.db_path)
     
-        def reconnect(self) -> None:
+    def reconnect(self) -> None:
         """Переподключение к базе данных (для работы с потоками)."""
         with self._lock:
             try:
@@ -60,7 +67,7 @@ class Database:
             self.connect()
         logger.info("Переподключение к БД выполнено")
     
-        def close(self) -> None:
+    def close(self) -> None:
         """Закрытие соединения с базой данных."""
         if self.conn:
             try:
@@ -102,7 +109,7 @@ class Database:
             )
         ''')
         
-                self.conn.commit()
+        self.conn.commit()
         logger.debug("Таблицы созданы или уже существуют")
 
     
@@ -122,7 +129,7 @@ class Database:
             ('service_name', 'TEXT')
         ]
         
-                for column_name, column_type in new_columns:
+        for column_name, column_type in new_columns:
             if column_name not in existing_columns:
                 try:
                     # column_name и column_type — внутренние константы, не пользовательский ввод

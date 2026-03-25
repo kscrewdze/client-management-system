@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 
 """Статистика по БД"""
+import logging
 from typing import Dict, Any
+
+logger = logging.getLogger(__name__)
 
 
 class StatisticsDB:
@@ -9,22 +12,21 @@ class StatisticsDB:
     
     def __init__(self, db):
         self.db = db
-        self.cursor = db.cursor
-        self.conn = db.conn
     
     def get_statistics(self) -> Dict[str, Any]:
         """Получение статистики"""
-        self.cursor.execute('SELECT COUNT(*), SUM(service_price) FROM clients')
-        total_count, total_sum = self.cursor.fetchone()
-        
-        self.cursor.execute('SELECT COUNT(*), SUM(service_price) FROM clients WHERE is_completed = 1')
-        completed_count, completed_sum = self.cursor.fetchone()
-        
-        self.cursor.execute('SELECT AVG(service_price) FROM clients')
-        avg_price = self.cursor.fetchone()[0]
-        
-        self.cursor.execute('SELECT COUNT(*) FROM matrices')
-        matrices_count = self.cursor.fetchone()[0]
+        with self.db._lock:
+            self.db.cursor.execute('SELECT COUNT(*), SUM(service_price) FROM clients')
+            total_count, total_sum = self.db.cursor.fetchone()
+            
+            self.db.cursor.execute('SELECT COUNT(*), SUM(service_price) FROM clients WHERE is_completed = 1')
+            completed_count, completed_sum = self.db.cursor.fetchone()
+            
+            self.db.cursor.execute('SELECT AVG(service_price) FROM clients')
+            avg_price = self.db.cursor.fetchone()[0]
+            
+            self.db.cursor.execute('SELECT COUNT(*) FROM matrices')
+            matrices_count = self.db.cursor.fetchone()[0]
         
         stats = {
             'total_clients': total_count or 0,
@@ -35,5 +37,5 @@ class StatisticsDB:
             'matrices_count': matrices_count or 0
         }
         
-        print(f"📊 Статистика: {stats}")
+        logger.debug("Статистика: %s", stats)
         return stats

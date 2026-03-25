@@ -1,39 +1,39 @@
 # -*- coding: utf-8 -*-
 
-"""Аметистовая тема - фиолетовые оттенки"""
+"""Аметистовая тема — мягкие фиолетово-лавандовые тона"""
 from themes.themes.base_theme import BaseTheme, ThemeColors
 
 
 class AmethystTheme(BaseTheme):
     """Аметистовая тема"""
-    
+
     def __init__(self):
         self.name = "Аметистовая"
-        self.description = "Фиолетовые оттенки"
+        self.description = "Лавандовые тона"
         super().__init__()
-    
+
     def get_colors(self) -> ThemeColors:
         return ThemeColors(
-            primary="#4a148c",
-            secondary="#6a1b9a",
-            accent="#ffd54f",
+            primary="#6a1b9a",
+            secondary="#7b1fa2",
+            accent="#ffa726",
             success="#2e7d32",
-            warning="#ff9800",
-            error="#d32f2f",
+            warning="#fb8c00",
+            error="#e53935",
             info="#0288d1",
-            background="#f3e5f5",
-            background_secondary="#e1bee7",
+            background="#f8f4fb",
+            background_secondary="#f0e6f6",
             background_widget="#ffffff",
-            background_hover="#ce93d8",
-            text_primary="#4a148c",
-            text_secondary="#6a1b9a",
-            text_accent="#ffd54f",
-            text_disabled="#9e9e9e",
+            background_hover="#e1d0eb",
+            text_primary="#2a0845",
+            text_secondary="#6a4c8a",
+            text_accent="#e65100",
+            text_disabled="#a0a0a0",
             text_inverse="#ffffff",
-            border="#ba68c8",
-            border_focus="#7b1fa2",
+            border="#d1b3e0",
+            border_focus="#6a1b9a",
             highlight="#ab47bc",
-            shadow="#e1bee7"
+            shadow="#ce93d8",
         )
 
 
