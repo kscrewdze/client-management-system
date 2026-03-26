@@ -33,6 +33,13 @@ exports/
 # Логи
 launch_stderr.txt
 launch_stdout.txt
+theme_debug.log
+
+# Copilot / AI config (local only)
+.github/agents/
+.github/instructions/
+.github/prompts/
+.github/copilot-instructions.md
 
 # IDE
 .vscode/
