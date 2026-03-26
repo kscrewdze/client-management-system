@@ -75,6 +75,36 @@ class TestSearchDB:
         """Поиск в пустой БД — пустой список."""
         assert db.search_clients("test") == []
 
+    def test_search_by_service_name(self, db_with_client):
+        """Search by service name."""
+        database, _, _ = db_with_client
+        results = database.search_clients("Тестовая услуга")
+        assert len(results) == 1
+
+    def test_search_by_price(self, db_with_client):
+        """Search by price value."""
+        database, _, _ = db_with_client
+        results = database.search_clients("3000")
+        assert len(results) == 1
+
+    def test_search_by_order_date(self, db_with_client):
+        """Search by order date."""
+        database, _, _ = db_with_client
+        results = database.search_clients("15.06.2025")
+        assert len(results) == 1
+
+    def test_search_by_birth_date(self, db_with_client):
+        """Search by birth date."""
+        database, _, _ = db_with_client
+        results = database.search_clients("26.01.1982")
+        assert len(results) == 1
+
+    def test_search_by_matrix_name(self, db_with_client):
+        """Search by matrix name via JOIN."""
+        database, _, _ = db_with_client
+        results = database.search_clients("Тестовая матрица")
+        assert len(results) == 1
+
 
 class TestSearchFiltersByStatus:
     """Фильтрация по статусу."""

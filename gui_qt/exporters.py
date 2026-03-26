@@ -37,7 +37,8 @@ def export_clients(db: Any) -> Path:
 
     headers = [
         "ID", "Имя", "Telegram", "Телефон", "Дата рожд.",
-        "ЧС", "Матрица", "Цена", "Дата заказа", "Статус", "Комментарий",
+        "ЧС", "Матрица", "Цена", "Дата заказа", "Статус",
+        "Дата завершения", "Комментарий",
     ]
     hfont = Font(bold=True, color="FFFFFF", size=10)
     hfill = PatternFill(start_color="2B5E8C", fill_type="solid")
@@ -55,9 +56,10 @@ def export_clients(db: Any) -> Path:
     for r, c in enumerate(clients, 2):
         vals = [
             c.id, c.name, c.telegram or "", c.phone or "",
-            c.birth_date, c.destiny_number, c.matrix_name or "",
+            c.birth_date, c.destiny_number, c.matrix_name or c.service_name or "",
             c.service_price, c.order_date,
             "Выполнен" if c.is_completed else "В ожидании",
+            c.completed_date or "",
             c.comment or "",
         ]
         for col, v in enumerate(vals, 1):

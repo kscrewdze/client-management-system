@@ -1,11 +1,11 @@
 # GUI
-PySide6>=6.6.0
+PySide6>=6.11.0
 
 # Изображения
-Pillow==10.1.0
+Pillow>=12.1.0
 
 # Утилиты
-python-dateutil==2.8.2
+python-dateutil>=2.9.0
 
 # Экспорт
-openpyxl==3.1.2
+openpyxl>=3.1.5

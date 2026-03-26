@@ -1,0 +1,6 @@
+# Ignore release ZIPs (too large for git)
+*.zip
+
+# Keep the log
+!releases.json
+!.gitkeep

@@ -37,7 +37,8 @@ class SplashScreen(QSplashScreen):
         layout.addWidget(title)
 
         # Версия
-        version = QLabel("v9.0")
+        from version import VERSION
+        version = QLabel(f"v{VERSION}")
         version.setAlignment(Qt.AlignCenter)
         version.setFont(QFont("Segoe UI", 11))
         version.setStyleSheet("color: #64b5f6; background: transparent;")

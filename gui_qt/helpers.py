@@ -158,7 +158,7 @@ def on_matrix_selected(
         custom_name_entry.setVisible(is_custom)
     info = mapping.get(text)
     if info:
-        price_entry.setText(str(int(info[2])))
+        price_entry.setText(str(int(info[2])) if info[2] == int(info[2]) else f"{info[2]:.2f}")
     elif is_custom:
         price_entry.clear()
         if custom_name_entry:

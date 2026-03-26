@@ -1,0 +1,10 @@
+# Releases
+
+This folder contains packaged releases (ZIP files with EXE).
+
+Files:
+
+- `releases.json` — log of all releases (version, date, size, test status)
+- `ClientManager-vX.Y.Z-win64.zip` — release archives
+
+These ZIP files are also published as [GitHub Releases](https://github.com/kscrewdze/client-management-system/releases).

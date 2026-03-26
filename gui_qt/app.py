@@ -9,7 +9,7 @@ import logging
 
 from PySide6.QtWidgets import QApplication
 from PySide6.QtCore import Qt, QTimer
-from PySide6.QtGui import QFont
+from PySide6.QtGui import QFont, QIcon
 
 logger = logging.getLogger(__name__)
 
@@ -21,12 +21,25 @@ def run_app() -> None:
     )
 
     app = QApplication(sys.argv)
+    from version import VERSION
     app.setApplicationName("Управление клиентами")
-    app.setApplicationVersion("9.0")
+    app.setApplicationVersion(VERSION)
 
     font = QFont("Segoe UI", 10)
     font.setStyleStrategy(QFont.PreferAntialias)
     app.setFont(font)
+
+    # Window icon (taskbar + title bar)
+    import os
+    icon_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "icon.ico")
+    if getattr(sys, "frozen", False):
+        # --onedir: data files in _MEIPASS (_internal/), fallback to exe dir
+        meipass = getattr(sys, "_MEIPASS", os.path.dirname(sys.executable))
+        icon_path = os.path.join(meipass, "icon.ico")
+        if not os.path.exists(icon_path):
+            icon_path = os.path.join(os.path.dirname(sys.executable), "icon.ico")
+    if os.path.exists(icon_path):
+        app.setWindowIcon(QIcon(icon_path))
 
     # Splash
     from gui_qt.splash import SplashScreen

@@ -64,7 +64,8 @@ class MatrixDialog(QDialog):
         # Заполняем при редактировании
         if matrix_data:
             self._name_entry.setText(matrix_data[1])
-            self._price_entry.setText(str(int(matrix_data[2])))
+            p = matrix_data[2]
+            self._price_entry.setText(str(int(p)) if p == int(p) else f"{p:.2f}")
 
         # Кнопки
         btn_row = QHBoxLayout()

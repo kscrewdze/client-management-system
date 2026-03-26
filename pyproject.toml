@@ -1,6 +1,6 @@
 [project]
 name = "client-manager"
-version = "9.0.0"
+version = "9.2.0"
 description = "Современное CRM-приложение для управления клиентами и матрицами"
 readme = "README.md"
 license = {text = "MIT"}
@@ -24,10 +24,10 @@ classifiers = [
 ]
 
 dependencies = [
-    "PySide6>=6.6.0",
-    "Pillow>=10.1.0",
-    "python-dateutil>=2.8.2",
-    "openpyxl>=3.1.2",
+    "PySide6>=6.11.0",
+    "Pillow>=12.1.0",
+    "python-dateutil>=2.9.0",
+    "openpyxl>=3.1.5",
 ]
 
 [project.urls]

@@ -2,7 +2,6 @@
 
 """Настройки приложения
 Автор: kScrewdze
-Версия: 9.0
 """
 import os
 import sys
@@ -28,7 +27,8 @@ class Settings:
     DB_NAME = "clients.db"
     
     # Настройки UI (ФИКСИРОВАННЫЙ РАЗМЕР)
-    APP_TITLE = "🏢 Управление клиентами v9.0"
+    from version import VERSION as _VER
+    APP_TITLE = f"ClientManager // v{_VER}"
     APP_WIDTH = 1000
     APP_HEIGHT = 600
     APP_GEOMETRY = f"{APP_WIDTH}x{APP_HEIGHT}"

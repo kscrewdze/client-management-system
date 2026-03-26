@@ -15,8 +15,8 @@ from themes.themes.emerald import emerald
 from themes.themes.sapphire import sapphire
 from themes.themes.ruby import ruby
 from themes.themes.amethyst import amethyst
-from themes.themes.midnight import midnight
-from themes.themes.sunrise import sunrise
+from themes.themes.dark import dark
+from themes.themes.glass import glass
 
 logger = logging.getLogger(__name__)
 
@@ -32,7 +32,7 @@ class ThemeEngine:
     def __init__(self) -> None:
         self.themes: Dict[str, BaseTheme] = {
             "emerald": emerald, "sapphire": sapphire, "ruby": ruby,
-            "amethyst": amethyst, "midnight": midnight, "sunrise": sunrise,
+            "amethyst": amethyst, "dark": dark, "glass": glass,
         }
         self.current_theme: Optional[BaseTheme] = None
         # Конфиг темы пишется рядом с .exe (APP_DIR), чтобы настройки сохранялись
@@ -68,7 +68,7 @@ class ThemeEngine:
         return True
 
     def is_dark(self) -> bool:
-        return bool(self.current_theme and "Полуночная" in self.current_theme.name)
+        return bool(self.current_theme and self.current_theme.name in ("Тёмная", "Стеклянная"))
 
     # --- QSS-генератор ---
 
@@ -90,6 +90,7 @@ class ThemeEngine:
 *{{font-family:{f};}}
 QMainWindow{{background:{c.background};}}
 QDialog{{background:{c.background};}}
+QTabWidget>QStackedWidget>QWidget{{background:{c.background};}}
 
 /* === Типографика === */
 QLabel{{color:{c.text_primary};font-size:11px;}}

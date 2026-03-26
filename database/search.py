@@ -17,39 +17,48 @@ class SearchDB:
     
     def search_clients(self, query: str) -> List[Client]:
         """
-        Поиск клиентов по имени, телефону, telegram или комментарию
-        
+        Full-text search across all client fields.
+
+        Searches: name, phone, telegram, comment, service_name,
+        matrix name, service_price, birth_date, order_date,
+        completed_date, destiny_number.
+
         Args:
-            query: Строка поиска
-            
+            query: Search string.
+
         Returns:
-            List[Client]: Список найденных клиентов
+            List[Client]: Matching clients.
         """
         try:
-            # Приводим запрос к нижнему регистру для Unicode-совместимого поиска
             search_term = f"%{query.lower()}%"
-            
+
             logger.debug("Поиск в БД: '%s'", query)
-            
-            # Используем UNICODE_LOWER для case-insensitive поиска кириллицы
+
             with self.db._lock:
                 self.db.cursor.execute('''
                     SELECT clients.*, matrices.name as matrix_name
-                    FROM clients 
-                    LEFT JOIN matrices ON clients.matrix_id = matrices.id 
-                    WHERE UNICODE_LOWER(clients.name) LIKE ? 
-                       OR UNICODE_LOWER(clients.phone) LIKE ? 
-                       OR UNICODE_LOWER(clients.telegram) LIKE ?
-                       OR UNICODE_LOWER(clients.comment) LIKE ?
+                    FROM clients
+                    LEFT JOIN matrices ON clients.matrix_id = matrices.id
+                    WHERE UNICODE_LOWER(clients.name) LIKE ?
+                       OR UNICODE_LOWER(COALESCE(clients.phone, '')) LIKE ?
+                       OR UNICODE_LOWER(COALESCE(clients.telegram, '')) LIKE ?
+                       OR UNICODE_LOWER(COALESCE(clients.comment, '')) LIKE ?
+                       OR UNICODE_LOWER(COALESCE(clients.service_name, '')) LIKE ?
+                       OR UNICODE_LOWER(COALESCE(matrices.name, '')) LIKE ?
+                       OR CAST(clients.service_price AS TEXT) LIKE ?
+                       OR COALESCE(clients.birth_date, '') LIKE ?
+                       OR COALESCE(clients.order_date, '') LIKE ?
+                       OR COALESCE(clients.completed_date, '') LIKE ?
+                       OR CAST(clients.destiny_number AS TEXT) LIKE ?
                     ORDER BY clients.created_date DESC
-                ''', (search_term, search_term, search_term, search_term))
-                
+                ''', (search_term,) * 11)
+
                 rows = self.db.cursor.fetchall()
             results = [Client.from_db_row(row) for row in rows]
-            
+
             logger.debug("Найдено: %d клиентов", len(results))
             return results
-            
+
         except Exception as e:
             logger.error("Ошибка поиска: %s", e)
             return []

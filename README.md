@@ -1,192 +1,275 @@
-# 🏢 Client Manager v9.0
+<div align="center">
 
-<p align="center">
-  <img src="icon.ico" alt="Client Manager" width="128">
-</p>
+# ◇ MATRIX · DESTINY ◇
 
-<p align="center">
-  <strong>Современное CRM-приложение для управления клиентами и матрицами</strong>
-</p>
+### ClientManager v9.2.0
 
-<p align="center">
-  <a href="#возможности">Возможности</a> •
-  <a href="#установка">Установка</a> •
-  <a href="#запуск">Запуск</a> •
-  <a href="#сборка-exe">Сборка EXE</a> •
-  <a href="#темы">Темы</a> •
-  <a href="#горячие-клавиши">Горячие клавиши</a>
-</p>
+**Программа для управления клиентами и матрицами судьбы**
+
+[![GitHub release](https://img.shields.io/github/v/release/kscrewdze/client-management-system?style=for-the-badge&color=6c5ce7&label=Скачать)](https://github.com/kscrewdze/client-management-system/releases/latest)
+[![License: MIT](https://img.shields.io/badge/Лицензия-MIT-green?style=for-the-badge)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.10+-blue?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+[![PySide6](https://img.shields.io/badge/PySide6-Qt6-41cd52?style=for-the-badge&logo=qt&logoColor=white)](https://doc.qt.io/qtforpython-6/)
 
 ---
 
-## 📖 О проекте
+[📥 Скачать](#-как-скачать-и-установить) · [📸 Скриншоты](#-скриншоты) · [✨ Возможности](#-возможности) · [❓ FAQ](#-частые-вопросы) · [📞 Связь](#-связь)
 
-Desktop CRM-приложение для управления клиентами с матричной нумерологией. Построено на **PySide6 (Qt6)** с базой данных **SQLite3**, включает 6 премиум-тем оформления, экспорт в Excel и встроенную статистику.
+</div>
+
+---
+
+## 📥 Как скачать и установить
+
+> **Для обычных пользователей — просто скачайте и запустите!**
+
+### Способ 1: Установщик (рекомендуется)
+
+1. Перейдите на страницу **[Скачать последнюю версию](https://github.com/kscrewdze/client-management-system/releases/latest)**
+2. Нажмите на файл **`ClientManager-v9.2.0-setup.exe`**
+3. Запустите скачанный файл
+4. Выберите папку для установки (или оставьте как есть)
+5. Поставьте галочку **«Создать ярлык на рабочем столе»**
+6. Нажмите **«Установить»** — готово! 🎉
+
+### Способ 2: ZIP-архив (портативная версия)
+
+1. Скачайте **`ClientManager-v9.2.0-win64.zip`** со страницы [релизов](https://github.com/kscrewdze/client-management-system/releases/latest)
+2. Распакуйте архив в любую папку
+3. Запустите **`ClientManager.exe`**
+
+> 💡 База данных (`clients.db`) и экспорт сохраняются рядом с программой. При обновлении ваши данные не пропадут!
+
+---
+
+## 📸 Скриншоты
+
+> Скриншоты можно посмотреть на странице [релизов](https://github.com/kscrewdze/client-management-system/releases/latest).
+>
+> Если хотите добавить свои — положите их в папку `screenshots/` и назовите:
+> - `main.png` — главное окно
+> - `themes.png` — темы оформления
+> - `clients.png` — список клиентов
+> - `stats.png` — статистика
+> - `add.png` — добавление клиента
+
+<!-- Раскомментируйте после добавления скриншотов:
+<div align="center">
+  <img src="screenshots/main.png" width="800" alt="Главное окно">
+  <p><em>Главное окно с кастомным заголовком</em></p>
+</div>
+-->
+
+---
 
 ## ✨ Возможности
 
-### 7 вкладок
+### 📊 7 вкладок
 
-| Вкладка | Описание |
+| Вкладка | Что делает |
+|---------|------------|
+| **📊 Статистика** | Показывает сколько клиентов, общий заработок, средний чек |
+| **👥 Клиенты** | Список всех клиентов с поиском и фильтрами |
+| **📐 Матрицы** | Создание и управление матрицами |
+| **➕ Добавить** | Быстрое добавление нового клиента |
+| **📤 Экспорт** | Выгрузка всех данных в Excel |
+| **🎨 Темы** | 6 красивых тем на выбор |
+| **☕ Поддержка** | Поддержать проект |
+
+### 🔍 Умный поиск
+
+Ищет **по всем полям** — имя, телефон, Telegram, цена, дата, матрица, комментарий. Начните вводить и результаты появятся мгновенно.
+
+### 🔢 Число Судьбы
+
+Автоматически рассчитывается из даты рождения клиента (нумерология, числа 1–22).
+
+### 🎨 6 тем оформления
+
+| Тема | Стиль |
+|------|-------|
+| 🌿 **Изумрудная** | Спокойная, зелёные тона |
+| 💎 **Сапфировая** | Деловая, синие тона |
+| ❤️ **Рубиновая** | Тёплая, бордовые тона |
+| 💜 **Аметистовая** | Яркая, фиолетовые тона |
+| 🖤 **Тёмная** | Тёмная тема (как в VS Code) |
+| 🪟 **Стеклянная** | Полупрозрачная, стильная |
+
+Темы переключаются мгновенно — без перезапуска!
+
+### 📤 Экспорт в Excel
+
+Выгрузка клиентов и матриц в `.xlsx` — открываются в Excel, Google Таблицы, LibreOffice.
+
+### ⌨️ Горячие клавиши
+
+| Клавиша | Действие |
 |---------|----------|
-| 📊 **Статистика** | Дашборд с 6 ключевыми метриками |
-| 👥 **Клиенты** | Полный CRUD + поиск + фильтрация |
-| 📐 **Матрицы** | Управление матрицами (создание, редактирование, удаление) |
-| ➕ **Добавить** | Форма быстрого добавления клиента |
-| 📤 **Экспорт** | Выгрузка данных в Excel (.xlsx) |
-| 🗄 **База данных** | SQL-браузер с просмотром таблиц |
-| 🎨 **Темы** | Переключение тем в реальном времени |
+| `Ctrl+1`…`7` | Переключение вкладок |
+| `Ctrl+R` / `F5` | Обновить данные |
+| `Ctrl+E` | Редактировать клиента |
+| `Ctrl+D` | Удалить клиента |
+| `Ctrl+F` | Перейти к поиску |
+| `Ctrl+Enter` | Сохранить клиента |
+| `Ctrl+Q` | Очистить форму |
+| `Ctrl+B` | Открыть браузер БД |
+| `F12` / `` Ctrl+` `` | Консоль разработчика |
 
-### Ключевые функции
+---
 
-- **Управление клиентами** — добавление, редактирование, удаление с автозаполнением полей
-- **Число Судьбы** — автоматический расчёт из даты рождения (нумерология)
-- **Поиск** — Unicode-совместимый поиск по имени, телефону, Telegram, комментариям
-- **Экспорт в Excel** — клиенты и матрицы в формате `.xlsx`
-- **6 тем оформления** — мгновенное переключение без перезагрузки
-- **Статистика** — общий заработок, средний чек, количество клиентов и матриц
-- **Splash Screen** — анимированный экран загрузки
+## 🛠 Для разработчиков
 
-## 🖥 Скриншоты
+<details>
+<summary><strong>Установка из исходников</strong></summary>
 
-> Добавьте скриншоты приложения в папку `screenshots/` и раскомментируйте:
->
-> ```
-> ![Главное окно](screenshots/main.png)
-> ![Темы](screenshots/themes.png)
-> ```
+```bash
+# Клонировать
+git clone https://github.com/kscrewdze/client-management-system.git
+cd client-management-system
 
-## 📦 Требования
+# Виртуальное окружение
+python -m venv venv
+venv\Scripts\activate          # Windows
+source venv/bin/activate       # Linux/macOS
 
-- **Python** 3.10+
-- **ОС**: Windows 10/11, Linux, macOS
+# Зависимости
+pip install -r requirements.txt
+
+# Запуск
+python main.py
+```
+
+</details>
+
+<details>
+<summary><strong>Сборка EXE</strong></summary>
+
+```bash
+pip install pyinstaller
+python release_manager.py build
+```
+
+Готовый EXE в `output/dist/ClientManager/`.
+
+</details>
+
+<details>
+<summary><strong>Сборка установщика</strong></summary>
+
+Требуется [Inno Setup 6](https://jrsoftware.org/isdl.php):
+
+```bash
+# 1. Сначала собрать EXE
+python release_manager.py build
+
+# 2. Скомпилировать установщик
+"C:\Program Files (x86)\Inno Setup 6\ISCC.exe" installer.iss
+```
+
+Результат: `output/installer/ClientManager-v9.2.0-setup.exe`
+
+</details>
+
+<details>
+<summary><strong>Запуск тестов</strong></summary>
+
+```bash
+pip install pytest
+python -m pytest tests/ -v
+```
+
+</details>
+
+### Структура проекта
+
+```
+client_manager/
+├── main.py                 # Точка входа
+├── version.py              # Версия приложения
+├── config/settings.py      # Настройки
+├── database/               # Работа с SQLite
+│   ├── core.py             # Подключение к БД
+│   ├── clients.py          # CRUD клиентов
+│   ├── matrices.py         # CRUD матриц
+│   ├── search.py           # Поиск по всем полям
+│   ├── statistics.py       # Статистика
+│   └── models.py           # Модели данных
+├── gui_qt/                 # Интерфейс (PySide6)
+│   ├── app.py              # Запуск приложения
+│   ├── main_window.py      # Главное окно
+│   ├── theme.py            # Движок тем
+│   ├── frames/             # Экраны (вкладки)
+│   └── dialogs/            # Диалоговые окна
+├── themes/themes/          # 6 цветовых схем
+├── utils/                  # Валидация, даты
+├── tests/                  # 114 тестов
+├── installer.iss           # Inno Setup скрипт
+└── release_manager.py      # Сборка релизов
+```
 
 ### Зависимости
 
 | Пакет | Версия | Назначение |
 |-------|--------|------------|
-| PySide6 | ≥ 6.6.0 | GUI-фреймворк (Qt6) |
-| Pillow | 10.1.0 | Работа с изображениями |
-| python-dateutil | 2.8.2 | Парсинг дат |
-| openpyxl | 3.1.2 | Экспорт в Excel |
-
-## 🚀 Установка
-
-```bash
-# Клонировать репозиторий
-git clone https://github.com/kscrewdze/client-management-system.git
-cd client-management-system
-
-# Создать виртуальное окружение
-python -m venv venv
-
-# Активировать (Windows)
-venv\Scripts\activate
-
-# Активировать (Linux/macOS)
-source venv/bin/activate
-
-# Установить зависимости
-pip install -r requirements.txt
-```
-
-## ▶️ Запуск
-
-```bash
-python main.py
-```
-
-При первом запуске автоматически создаётся база данных `clients.db` с необходимыми таблицами.
-
-## 🔨 Сборка EXE
-
-Для сборки standalone `.exe` файла (Windows):
-
-```bash
-pip install pyinstaller
-pyinstaller ClientManager.spec
-```
-
-Готовый файл появится в `dist/ClientManager.exe`. Скопируйте `clients.db` в папку `dist/` рядом с exe-файлом.
-
-## 🎨 Темы
-
-Приложение поддерживает 6 тем оформления с мгновенным переключением:
-
-| Тема | Стиль |
-|------|-------|
-| 🌿 Изумрудная | Профессиональная, зелёные тона |
-| 💎 Сапфировая | Деловая, синие тона |
-| ❤️ Рубиновая | Тёплая, бордовые тона |
-| 💜 Аметистовая | Креативная, фиолетовые тона |
-| 🌙 Полуночная | Тёмная тема, ночные тона |
-| 🌅 Рассветная | Тёплая, оранжевые тона |
-
-## ⌨️ Горячие клавиши
-
-| Клавиша | Действие |
-|---------|----------|
-| `Ctrl+1`…`Ctrl+7` | Переключение между вкладками |
-| `Ctrl+R` / `F5` | Обновить данные |
-| `Ctrl+E` | Редактировать клиента |
-| `Ctrl+D` | Удалить клиента |
-| `Ctrl+F` | Фокус на поле поиска |
-| `Ctrl+Enter` | Сохранить нового клиента |
-| `Ctrl+Q` | Очистить форму |
-| `F12` | Открыть отладчик (dev) |
-
-## 🏗 Архитектура
-
-```
-client_manager/
-├── main.py                 # Точка входа
-├── config/settings.py      # Глобальные настройки
-├── database/               # Слой данных (SQLite3)
-│   ├── core.py             # Основной класс Database
-│   ├── clients.py          # CRUD клиентов
-│   ├── matrices.py         # CRUD матриц
-│   ├── search.py           # Поиск
-│   ├── statistics.py       # Статистика
-│   └── models.py           # Dataclass-модели
-├── gui_qt/                 # PySide6 GUI
-│   ├── app.py              # QApplication + splash screen
-│   ├── main_window.py      # Главное окно с вкладками
-│   ├── theme.py            # QSS-движок тем
-│   ├── frames/             # Фреймы вкладок
-│   └── dialogs/            # Диалоговые окна
-├── themes/                 # Система тем
-│   └── themes/             # 6 цветовых схем
-├── utils/                  # Утилиты
-│   ├── date_parser.py      # Парсинг дат
-│   └── validators.py       # Валидация данных
-└── build_exe_hooks.py      # PyInstaller хуки
-```
-
-### Паттерны проектирования
-
-- **Layered Architecture** — GUI → Business Logic → Database
-- **Delegation** — `Database` делегирует операции в `ClientsDB`, `MatricesDB`, `SearchDB`, `StatisticsDB`
-- **Dataclass Models** — `@dataclass` + `from_db_row()` + `to_dict()`
-- **Manager Pattern** — `ThemeManager`, `TabsManager`, `ShortcutManager`
-- **Observer/Callback** — главное окно передаёт колбэки фреймам
-
-## 🔒 Безопасность
-
-- Параметризованные SQL-запросы (защита от SQL-инъекций)
-- Потокобезопасность через `threading.Lock`
-- HTML-экранирование при экспорте (защита от XSS)
-- Валидация входных данных на уровне форм
-
-## 📄 Лицензия
-
-Этот проект распространяется под лицензией MIT. Подробности в файле [LICENSE](LICENSE).
-
-## 👤 Автор
-
-**kScrewdze**
+| PySide6 | ≥ 6.11.0 | Интерфейс (Qt6) |
+| Pillow | ≥ 12.1.0 | Изображения |
+| python-dateutil | ≥ 2.9.0 | Парсинг дат |
+| openpyxl | ≥ 3.1.5 | Экспорт в Excel |
 
 ---
 
-<p align="center">
-  Сделано с ❤️ на Python + PySide6
-</p>
+## ❓ Частые вопросы
+
+<details>
+<summary><strong>Программа не запускается / ошибка DLL</strong></summary>
+
+Убедитесь, что вы распаковали **все файлы** из ZIP-архива в одну папку. Не перемещайте `ClientManager.exe` отдельно от других файлов.
+
+</details>
+
+<details>
+<summary><strong>Где хранятся мои данные?</strong></summary>
+
+База данных `clients.db` создаётся рядом с программой. При обновлении — просто замените файлы программы, ваша база останется на месте.
+
+</details>
+
+<details>
+<summary><strong>Как перенести данные на другой компьютер?</strong></summary>
+
+Скопируйте файл `clients.db` из папки программы на новый компьютер в ту же папку, где установлен ClientManager.
+
+</details>
+
+<details>
+<summary><strong>Как обновить программу?</strong></summary>
+
+1. Скачайте новую версию со страницы [релизов](https://github.com/kscrewdze/client-management-system/releases/latest)
+2. Установите поверх старой (установщик) или замените файлы в папке (ZIP)
+3. Ваша база данных сохранится!
+
+</details>
+
+---
+
+## 📞 Связь
+
+- **Telegram:** [@kscrewdze](https://t.me/kscrewdze)
+- **GitHub Issues:** [Сообщить о проблеме](https://github.com/kscrewdze/client-management-system/issues)
+- **Предложить идею:** создайте Issue с тегом `enhancement`
+
+---
+
+## 📄 Лицензия
+
+Проект распространяется под лицензией [MIT](LICENSE). Можно использовать бесплатно.
+
+---
+
+<div align="center">
+
+**Сделано с ❤️ на Python + PySide6**
+
+[![GitHub stars](https://img.shields.io/github/stars/kscrewdze/client-management-system?style=social)](https://github.com/kscrewdze/client-management-system)
+
+</div>

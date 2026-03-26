@@ -122,7 +122,8 @@ class EditClientDialog(QDialog):
                     self._matrix_combo.setCurrentIndex(i)
                     self._custom_name.setText(c.service_name)
                     break
-        self._price_entry.setText(str(int(c.service_price)))
+        p = c.service_price
+        self._price_entry.setText(str(int(p)) if p == int(p) else f"{p:.2f}")
 
     def _save(self) -> None:
         data = validate_client_form(

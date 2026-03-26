@@ -94,6 +94,7 @@ class ToastNotification(QLabel):
 
     def _fade_in(self) -> None:
         self._stop_anim()
+        self._opacity.setOpacity(1.0)
         self._anim = QPropertyAnimation(self._opacity, b"opacity")
         self._anim.setDuration(200)
         self._anim.setStartValue(0.0)
@@ -104,15 +105,22 @@ class ToastNotification(QLabel):
         self._stop_anim()
         self._anim = QPropertyAnimation(self._opacity, b"opacity")
         self._anim.setDuration(400)
-        self._anim.setStartValue(1.0)
+        self._anim.setStartValue(self._opacity.opacity())
         self._anim.setEndValue(0.0)
         self._anim.setEasingCurve(QEasingCurve.OutCubic)
-        self._anim.finished.connect(self.hide)
+        self._anim.finished.connect(self._on_fade_out_done)
         self._anim.start()
 
+    def _on_fade_out_done(self) -> None:
+        self.hide()
+        self._opacity.setOpacity(0.0)
+
     def _stop_anim(self) -> None:
-        if self._anim and self._anim.state() == QPropertyAnimation.Running:
-            self._anim.stop()
+        if self._anim:
+            self._anim.finished.disconnect()
+            if self._anim.state() == QPropertyAnimation.Running:
+                self._anim.stop()
+            self._anim = None
 
 
 # ======================================================================

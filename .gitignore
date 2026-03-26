@@ -14,6 +14,7 @@ venv.bak/
 *.egg
 dist/
 build/
+output/
 
 # База данных (пользовательские данные)
 *.db
@@ -26,7 +27,12 @@ exports/
 
 # PyInstaller
 *.spec
+!ClientManager.spec
 *.manifest
+
+# Логи
+launch_stderr.txt
+launch_stdout.txt
 
 # IDE
 .vscode/
